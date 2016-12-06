@@ -101,14 +101,14 @@ namespace TreeCatalog
 
             try
             {
-                var levels = db.Levels.Where(e => e.Name.Contains(name)).ToList();
+                var level = db.Levels.Single(e => e.Name.Contains(name));
 
-                list = db.SubLevels.Where(e => e.LevelId == levels.Last().Id).ToList();
+                list = db.SubLevels.Where(e => e.LevelId == level.Id).ToList();
                 errorOccured = false;
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex.Message);
+
                 errorOccured = true;
             }
             return list;
@@ -120,11 +120,11 @@ namespace TreeCatalog
             errorOccured = true;
             try
             {
-                var subLevels = db.SubLevels.Where(e => e.Id == id).ToList();
+                var subLevel = db.SubLevels.Single(e => e.Id == id);
 
-                if (subLevels[0] != null && subLevels[0].Type.Equals("node"))
+                if (subLevel != null && subLevel.Type.Equals("node"))
                 {
-                    list = db.SubSubLevels.Where(e => e.SubLevelId == subLevels[0].Id).ToList();
+                    list = db.SubSubLevels.Where(e => e.SubLevelId == subLevel.Id).ToList();
                     errorOccured = false;
                 }
             }
@@ -140,10 +140,11 @@ namespace TreeCatalog
             errorOccured = true;
             try
             {
-                var subLevels = db.SubLevels.Where(e => e.Name.Contains(name)).ToList();
-                if (subLevels[0] != null && subLevels[0].Type.Equals("node"))
+                var subLevel = db.SubLevels.Single(e => e.Name.Contains(name));
+
+                if (subLevel != null && subLevel.Type.Equals("node"))
                 {
-                    list = db.SubSubLevels.Where(e => e.SubLevelId == subLevels[0].Id).ToList();
+                    list = db.SubSubLevels.Where(e => e.SubLevelId == subLevel.Id).ToList();
                     errorOccured = false;
                 }
             }
