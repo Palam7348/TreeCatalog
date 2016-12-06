@@ -15,6 +15,7 @@ namespace TreeCatalog
         static void Main(string[] args)
         {
             ConsoleMode console = new ConsoleMode();
+            bool errorOccured;
 
             //console.ShowElementsOfFirstLevel();
 
@@ -28,19 +29,21 @@ namespace TreeCatalog
 
             //Console.WriteLine("--------------------------------");
 
-            console.ShowElementsByFirstLevelId(1);
+            //console.ShowElementsByFirstLevelId(1);
+
+            //Console.WriteLine("--------------------------------");
+
+            //console.ShowElementsByFirstLevelName("Books");
+
+            //Console.WriteLine("--------------------------------");
+
+            //console.ShowElementsBySecondLevelId(5);
+
+            //Console.WriteLine("--------------------------------");
+
+            //console.ShowElementsBySecondLevelName("Fantastic");
+
             
-            Console.WriteLine("--------------------------------");
-
-            console.ShowElementsByFirstLevelName("Books");
-
-            Console.WriteLine("--------------------------------");
-
-            console.ShowElementsBySecondLevelId(5);
-
-            Console.WriteLine("--------------------------------");
-
-            console.ShowElementsBySecondLevelName("Fantastic");
 
             Console.ReadLine();
         }

@@ -101,7 +101,7 @@ namespace TreeCatalog
 
             try
             {
-                var level = db.Levels.Single(e => e.Name.Contains(name));
+                var level = db.Levels.Single(e => e.Name.ToLower().Contains(name.ToLower()));
 
                 list = db.SubLevels.Where(e => e.LevelId == level.Id).ToList();
                 errorOccured = false;
@@ -140,7 +140,7 @@ namespace TreeCatalog
             errorOccured = true;
             try
             {
-                var subLevel = db.SubLevels.Single(e => e.Name.Contains(name));
+                var subLevel = db.SubLevels.Single(e => e.Name.ToLower().Contains(name.ToLower()));
 
                 if (subLevel != null && subLevel.Type.Equals("node"))
                 {
@@ -160,10 +160,60 @@ namespace TreeCatalog
 
         #region AddElements
 
-        //public bool AddElement(int firstLevelId, )
-        //{
+        public void AddElementToFirstLevel(string value, out bool errorOccured)
+        {
+            errorOccured = true;
+            try
+            {
+                db.Levels.Add(new Level { Name = value });
+                db.SaveChanges();
+                errorOccured = false;
+            }
+            catch
+            {
+                errorOccured = true;
+            }
+        }
 
-        //}
+        public void AddElementToSecondLevel(string value, int firstLevelId, bool allowToInsertElements, out bool errorOccured)
+        {
+            errorOccured = true;
+            try
+            {
+                var level = db.Levels.Single(e => e.Id == firstLevelId);
+                if (level != null)
+                {
+                    string type = allowToInsertElements ? node : leaf;
+                    db.SubLevels.Add(new SubLevel { Name = value, LevelId = firstLevelId, Type = type });
+                    db.SaveChanges();
+                    errorOccured = false;
+                }                
+            }
+            catch
+            {
+                errorOccured = true;
+            }
+        }
+
+        public void AddElementToThirdLevel(string value, int secondLevelId, out bool errorOccured)
+        {
+            errorOccured = true;
+            try
+            {
+                var subLevel = db.SubLevels.Single(e => e.Id == secondLevelId) as SubLevel;
+                if (subLevel != null && subLevel.Type.Equals(node))
+                {
+                    db.SubSubLevels.Add(new SubSubLevel { Name = value, SubLevelId = secondLevelId });
+                }
+                
+                db.SaveChanges();
+                errorOccured = false;
+            }
+            catch
+            {
+                errorOccured = true;
+            }
+        }
 
         #endregion
 

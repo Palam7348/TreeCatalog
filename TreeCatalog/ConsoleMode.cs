@@ -51,6 +51,7 @@ namespace TreeCatalog
         }
         #endregion
 
+        #region ShowElementsByLevelIdOrName
         public void ShowElementsByFirstLevelId(int id)
         {
             bool errorOccured;
@@ -102,6 +103,26 @@ namespace TreeCatalog
                 }
             }
         }
+        #endregion
+
+        #region AddElementToLevel
+
+        public void AddElementToFirstLevel(string value, out bool errorOccured)
+        {
+            api.AddElementToFirstLevel(value, out errorOccured);
+        }
+
+        public void AddElementToSecondLevel(string value, int firstLevelId, bool allowToInsertElements, out bool errorOccured)
+        {
+            api.AddElementToSecondLevel(value, firstLevelId, allowToInsertElements, out errorOccured);
+        }
+
+        public void AddElementToThirdLevel(string value, int secondLevelId, out bool errorOccured)
+        {
+            api.AddElementToThirdLevel(value, secondLevelId, out errorOccured);
+        }
+
+        #endregion
 
     }
 }
