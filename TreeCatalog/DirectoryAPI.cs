@@ -75,7 +75,90 @@ namespace TreeCatalog
         }
         #endregion
 
-        #region GetElementsByLevelId
+        #region GetElementsByLevelIdOrName
+        public Level GetElementOfFirstLevelById(int id, out bool errorOccured)
+        {
+            Level level = null;
+            errorOccured = true;
+
+            try
+            {
+                level = db.Levels.Single(e => e.Id == id);
+                if (level != null)
+                {
+                    errorOccured = false;
+                }
+                
+            }
+            catch
+            {
+                errorOccured = true;
+            }
+            return level;
+        }
+
+        public Level GetElementOfFirstLevelByName(string name, out bool errorOccured)
+        {
+            Level level = null;
+            errorOccured = true;
+
+            try
+            {
+                level = db.Levels.Single(e => e.Name.ToLower().Contains(name.ToLower()));
+                if (level != null)
+                {
+                    errorOccured = false;
+                }   
+            }
+            catch
+            {
+
+                errorOccured = true;
+            }
+            return level;
+        }
+
+        public SubLevel GetElementOfSecondLevelById(int id, out bool errorOccured)
+        {
+            SubLevel subLevel = null;
+            errorOccured = true;
+
+            try
+            {
+                subLevel = db.SubLevels.Single(e => e.Id == id);
+                if (subLevel != null)
+                {
+                    errorOccured = false;
+                }
+
+            }
+            catch
+            {
+                errorOccured = true;
+            }
+            return subLevel;
+        }
+
+        public SubLevel GetElementOfSecondLevelByName(string name, out bool errorOccured)
+        {
+            SubLevel subLevel = null;
+            errorOccured = true;
+
+            try
+            {
+                subLevel = db.SubLevels.Single(e => e.Name.ToLower().Contains(name.ToLower()));
+                if (subLevel != null)
+                {
+                    errorOccured = false;
+                }
+            }
+            catch
+            {
+
+                errorOccured = true;
+            }
+            return subLevel;
+        }
 
         public List<SubLevel> GetElementsByFirstLevelId(int id, out bool errorOccured)
         {
@@ -200,14 +283,13 @@ namespace TreeCatalog
             errorOccured = true;
             try
             {
-                var subLevel = db.SubLevels.Single(e => e.Id == secondLevelId) as SubLevel;
+                var subLevel = db.SubLevels.Single(e => e.Id == secondLevelId);
                 if (subLevel != null && subLevel.Type.Equals(node))
                 {
                     db.SubSubLevels.Add(new SubSubLevel { Name = value, SubLevelId = secondLevelId });
-                }
-                
-                db.SaveChanges();
-                errorOccured = false;
+                    db.SaveChanges();
+                    errorOccured = false;
+                }                               
             }
             catch
             {

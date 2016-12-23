@@ -68,12 +68,14 @@
   <ItemGroup>
     <Compile Include="ConsoleMode.cs" />
     <Compile Include="DirectoryAPI.cs" />
+    <Compile Include="Mode.cs" />
     <Compile Include="Models\LevelContext.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\SubLevel.cs" />
     <Compile Include="Models\SubSubLevel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TelegramMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
